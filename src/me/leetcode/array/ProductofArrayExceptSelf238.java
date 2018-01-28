@@ -24,7 +24,7 @@ public class ProductofArrayExceptSelf238 {
 	    if (num != 0)
 		product *= num;
 	    else
-		flag ++;
+		flag++;
 	}
 	int len = nums.length;
 	/**
@@ -32,9 +32,9 @@ public class ProductofArrayExceptSelf238 {
 	 */
 	for (int i = 0; i < len; i++) {
 	    System.out.println(nums[i]);
-	    if(flag == 0) {
+	    if (flag == 0) {
 		nums[i] = product / nums[i];
-	    }else if(flag == 1) {
+	    } else if (flag == 1) {
 		if (nums[i] == 0) {
 		    nums[i] = product;
 		} else {
@@ -48,8 +48,9 @@ public class ProductofArrayExceptSelf238 {
 	System.out.println("==================");
 	return nums;
     }
+
     public static void main(String[] args) {
-	int[] nums = new int[] {1, 0 };
+	int[] nums = new int[] { 1, 0 };
 	nums = productExceptSelf(nums);
 	for (int i : nums) {
 	    System.out.println(i);

@@ -26,7 +26,7 @@ public class OnebitAndTwobitChar717 {
 	int lastIndex = bits.length - 1;
 	int i = 0;
 	while (i < lastIndex) {
-	    //1开头移动两位，0开头移动一位
+	    // 1开头移动两位，0开头移动一位
 	    i += bits[i] + 1;
 	}
 	return i == lastIndex;

@@ -23,13 +23,14 @@ import java.util.List;
  */
 public class FindAllNumbersDisappearedinanArray446 {
     public static void main(String[] args) {
-	int[] nums = new int[]{4,3,2,7,8,2,3,1};
+	int[] nums = new int[] { 4, 3, 2, 7, 8, 2, 3, 1 };
 	findDisappearedNumbers(nums);
     }
+
     public static List<Integer> findDisappearedNumbers(int[] nums) {
 	List<Integer> res = new ArrayList<Integer>();
 	int n = nums.length;
-	//关键在于将每个元素的值减一所对应的数组下标的元素变为负值
+	// 关键在于将每个元素的值减一所对应的数组下标的元素变为负值
 	for (int i = 0; i < n; i++) {
 	    int currNum = Math.abs(nums[i]);
 	    if (nums[currNum - 1] > 0)
