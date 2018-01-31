@@ -1,8 +1,5 @@
 package me.leetcode.array;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * A zero-indexed array A of length N contains all integers from 0 to N-1. Find
  * and return the longest length of set S, where S[i] = {A[i], A[A[i]],
@@ -31,27 +28,23 @@ public class ArrayNesting565 {
 	int len = nums.length;
 	int k = 0;
 	int max = 0;
-	Set<Integer> set = new HashSet<Integer>();
 	for (int i = 0; i < len; i++) {
-	    if (nums[i] < 0) {
-		continue;
-	    }
+	    int size = 0;
 	    k = nums[i];
 	    nums[i] = -1;
-	    while (!set.contains(k) && nums[k] >= 0) {
-		set.add(k);
+	    while (k >= 0) {
+		size++;
 		k = nums[k];
-		nums[k] = -1;
 	    }
-	    max = Integer.max(max, set.size());
-	    set.clear();
+	    max = Integer.max(max, size);
 	}
 	return max;
     }
 }
 
 /**
- * 最优解（参考LeetCode）
+ * 最优解（参考https://discuss.leetcode.com/topic/90538/c-java-clean-code-o-n）
+ * 
  * @author Administrator
  *
  */
