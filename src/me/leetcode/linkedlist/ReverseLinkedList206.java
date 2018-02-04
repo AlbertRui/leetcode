@@ -27,4 +27,11 @@ public class ReverseLinkedList206 {
 	}
 	return res;
     }
+    
+    public ListNode reverseListByRecursively(ListNode head) {
+	if(head != null && head.next != null) {
+	    
+	}
+	return head;
+    }
 }
