@@ -1,7 +1,5 @@
 package me.leetcode.linkedlist;
 
-import java.util.Stack;
-
 /**
  * Definition for singly-linked list. 
  * public class ListNode { 
@@ -26,9 +24,13 @@ import java.util.Stack;
  */
 public class AddTwoNumbersII445 {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-	ListNode result = null;
-	ListNode firstList = reverse(l1);
-	ListNode secondList = reverse(l2);
+	ListNode result = new ListNode(0);
+	l1 = reverse(l1);
+	l2 = reverse(l2);
+	while(l1 != null || l2 != null) {
+	    int a = l1 == null?0:l1.val;
+	    int b = l2 == null?0:l2.val;
+	}
 	return result;
     }
     
