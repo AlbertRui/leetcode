@@ -29,18 +29,31 @@ public class OddEvenLinkedList328 {
 	ListNode current = tmpEven.next;
 	boolean isOdd = true;
 	while (current != null) {
-	    if (isOdd) {
-		tmpOdd.next = current;
-		tmpOdd = current;
-	    } else {
-		tmpEven.next = current;
-		tmpEven = current;
-	    }
+	    if (isOdd)
+		tmpOdd = tmpOdd.next = current;
+	    else
+		tmpEven = tmpEven.next = current;
 	    current = current.next;
 	    isOdd = !isOdd;
 	}
 	tmpEven.next = null;
 	tmpOdd.next = even;
+	return head;
+    }
+}
+
+class Solution {
+    public ListNode oddEvenList(ListNode head) {
+	if (head == null)
+	    return null;
+	ListNode odd = head, even = head.next, evenHead = even;
+	while (even != null && even.next != null) {
+	    odd.next = even.next;
+	    odd = odd.next;
+	    even.next = odd.next;
+	    even = even.next;
+	}
+	odd.next = evenHead;
 	return head;
     }
 }
