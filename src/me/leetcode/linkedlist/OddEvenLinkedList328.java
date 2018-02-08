@@ -42,6 +42,11 @@ public class OddEvenLinkedList328 {
     }
 }
 
+/**
+ * 更优的解法
+ * @author Administrator
+ *
+ */
 class Solution {
     public ListNode oddEvenList(ListNode head) {
 	if (head == null)
