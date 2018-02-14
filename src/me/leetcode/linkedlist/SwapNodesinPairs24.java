@@ -1,5 +1,7 @@
 package me.leetcode.linkedlist;
 
+import me.leetcode.util.ListNode;
+
 /**
  * Given a linked list, swap every two adjacent nodes and return its head.
  * For example,

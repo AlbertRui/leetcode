@@ -1,5 +1,7 @@
 package me.leetcode.linkedlist;
 
+import me.leetcode.util.ListNode;
+
 /**
  * Given a (singly) linked list with head node root, write a function to split
  * the linked list into k consecutive linked list "parts".

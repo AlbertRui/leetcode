@@ -1,5 +1,7 @@
 package me.leetcode.linkedlist;
 
+import me.leetcode.util.ListNode;
+
 /**
  * Reverse a singly linked list.
  * 
