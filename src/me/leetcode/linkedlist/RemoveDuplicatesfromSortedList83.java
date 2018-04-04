@@ -7,12 +7,12 @@ import me.leetcode.util.ListNode;
  * For example,
  * Given 1->1->2, return 1->2.
  * Given 1->1->2->3->3, return 1->2->3.
- *
+ * <p>
  * Definition for singly-linked list.
  * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
+ * int val;
+ * ListNode next;
+ * ListNode(int x) { val = x; }
  * }
  *
  * @author AlbertRui
@@ -37,7 +37,7 @@ public class RemoveDuplicatesfromSortedList83 {
 }
 
 /**
- *  更优解
+ * 更优解
  */
 class _RemoveDuplicatesfromSortedList83 {
     public ListNode deleteDuplicates(ListNode head) {

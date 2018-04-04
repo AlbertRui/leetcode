@@ -8,15 +8,16 @@ import me.leetcode.util.ListNode;
  * Example:
  * Input: 1->2->4, 1->3->4
  * Output: 1->1->2->3->4->4
- *
+ * <p>
  * Definition for singly-linked list.
  * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
+ * int val;
+ * ListNode next;
+ * ListNode(int x) { val = x; }
  * }
- *
+ * <p>
  * 递归版
+ *
  * @author AlbertRui
  * @date 2018-02-13 20:51
  */

@@ -3,9 +3,6 @@ package me.leetcode.linkedlist;
 import me.leetcode.util.ListNode;
 import me.leetcode.util.TreeNode;
 
-import java.util.HashMap;
-import java.util.Stack;
-
 /**
  * Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
  * For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
@@ -21,7 +18,7 @@ import java.util.Stack;
  * @author AlbertRui
  * @create 2018-02-15 23:48
  */
-public class ConvertSortedListtoBinarySearchTree109 {
+public class ConvertSortedListToBinarySearchTree109 {
     public TreeNode sortedListToBST(ListNode head) {
         return sortedListToBST(head, null);
     }

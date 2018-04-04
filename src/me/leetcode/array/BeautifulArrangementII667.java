@@ -7,22 +7,21 @@ package me.leetcode.array;
  * 形成的k个元素差为： 5 4 3 2 1 （反向也是可以的 即 1 6 2 5 3
  * 4）若k不等于n-1，我们只需要按上述规律形成满足k-1的序列，剩余序列按递减序即可（剩余的差值都为1）。 假设n = 6，k =4，我们得到的序列即是：
  * 1 6 2 5 4 3。
- * 
- * @author Administrator
  *
+ * @author Administrator
  */
 public class BeautifulArrangementII667 {
     public int[] constructArray(int n, int k) {
-	int index = 0;
-	int[] arr = new int[n];
-	// 最大n-1
-	for (int i = 1, j = n; i <= j;) {
-	    if (k > 1) {
-		arr[index++] = (k-- % 2 == 1 ? i++ : j--);
-	    } else {
-		arr[index++] = i++;
-	    }
-	}
-	return arr;
+        int index = 0;
+        int[] arr = new int[n];
+        // 最大n-1
+        for (int i = 1, j = n; i <= j; ) {
+            if (k > 1) {
+                arr[index++] = (k-- % 2 == 1 ? i++ : j--);
+            } else {
+                arr[index++] = i++;
+            }
+        }
+        return arr;
     }
 }
