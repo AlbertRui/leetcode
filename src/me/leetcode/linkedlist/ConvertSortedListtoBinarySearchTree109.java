@@ -12,55 +12,36 @@ import java.util.Stack;
  * Example:
  * Given the sorted linked list: [-10,-3,0,5,9],
  * One possible answer is: [0,-3,9,-10,null,5], which represents the following height balanced BST:
- *       0
- *      / \
- *     -3 9
- *     /  /
- *   -10  5
+ * 0
+ * / \
+ * -3 9
+ * /  /
+ * -10  5
  *
  * @author AlbertRui
  * @create 2018-02-15 23:48
  */
 public class ConvertSortedListtoBinarySearchTree109 {
     public TreeNode sortedListToBST(ListNode head) {
-        return null;
+        return sortedListToBST(head, null);
     }
-    /**
-     *
-     * @param preorder
-     * @param inorder
-     * @return
-     */
-    public TreeNode buildTree2(int[] preorder, int[] inorder) {
-        HashMap<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < inorder.length; i++) {
-            map.put(inorder[i], i);
-        }
-        TreeNode root = null;
-        TreeNode p = root;
-        Stack<TreeNode> stack = new Stack<>();
-        for (int i = 0; i < preorder.length; i++) {
-            int temp = map.get(preorder[i]);
-            TreeNode node = new TreeNode(preorder[i]);
-            if (stack.isEmpty()) {
-                root = node;
-//              stack.add(node);
-                p = root;
-            } else {
-                if (temp < map.get(stack.peek().val)) {
-                    p.left = node;
-                    p = p.left;
-                } else {
-                    while (!stack.isEmpty() && temp > map.get(stack.peek().val)) {
-                        p = stack.pop();
-                    }
-                    p.right = node;
-                    p = p.right;
-                }
-            }
-            stack.add(node);
-        }
 
+    public TreeNode sortedListToBST(ListNode head, ListNode end) {
+        if (head == end)
+            return null;
+        if (head.next == end) {
+            TreeNode root = new TreeNode(head.val);
+            return root;
+        }
+        ListNode slow = head, fast = head;
+        while (fast.next != end && fast.next.next != end) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        TreeNode root = new TreeNode(slow.val);
+        root.right = sortedListToBST(slow.next, end);
+        root.left = sortedListToBST(head, slow);
         return root;
     }
+
 }
