@@ -36,4 +36,23 @@ public class RemoveNthNodeFromEndOfList19 {
 
         return p.next;
     }
+
+    public ListNode solution2(ListNode head, int n) {
+        int length = 0;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode first = head;
+        while (first != null) {
+            length++;
+            first = first.next;
+        }
+        length -= n;
+        first = dummy;
+        while (length -- > 0) {
+            first = first.next;
+        }
+        first.next = first.next.next;
+        return dummy.next;
+    }
+
 }
