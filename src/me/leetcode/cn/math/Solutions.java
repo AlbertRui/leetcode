@@ -90,8 +90,31 @@ public class Solutions {
         return (int) sum * sign;
     }
 
+    /**
+     * 判断一个整数是否是回文数，不能使用辅助空间
+     *
+     * @param x
+     * @return
+     */
+    public boolean isPalindrome(int x) {
+        if (x < 0 || (x % 10 == 0 && x != 0)) {
+            return false;
+        }
+
+        int revertedNumber = 0;
+        while (x > revertedNumber) {
+            revertedNumber = revertedNumber * 10 + x % 10;
+            x /= 10;
+            System.out.println(revertedNumber + " " + x);
+        }
+        //当x的长度为奇数时，x == revertedNumber / 10去掉中间通过的数字
+        System.out.println(x == revertedNumber || x == revertedNumber / 10);
+        return x == revertedNumber || x == revertedNumber / 10;
+    }
+
     public static void main(String[] args) {
-        reverse(-120);
+        Solutions solutions = new Solutions();
+        solutions.isPalindrome(123454321);
     }
 
 }
