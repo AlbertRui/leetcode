@@ -1,7 +1,9 @@
 package me.leetcode.cn.fail.string;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author AlbertRui
@@ -73,4 +75,38 @@ public class Solutions {
         }
         return maxlength;
     }
+
+    /**
+     * 6. Z字形转换
+     * 将字符串 "PAYPALISHIRING" 以Z字形排列成给定的行数：（下面这样的形状）
+     * <p>
+     * P   A   H   N
+     * A P L S I I G
+     * Y   I   R
+     * 之后按逐行顺序依次排列："PAHNAPLSIIGYIR"
+     * 实现一个将字符串进行指定行数的转换的函数:
+     * string convert(string text, int nRows);
+     * convert("PAYPALISHIRING", 3) 应当返回 "PAHNAPLSIIGYIR" 。
+     */
+    public static String convert(String s, int numRows) {
+        int count = 0;
+        int j = 0;
+        char[] result = new char[s.length()];
+        Set<Integer> set = new HashSet<>();
+        while (true) {
+            int k = (count++ * 2 * (numRows - 1)) % (s.length() + 1);
+            System.out.println(k + " " + count * 2 * (numRows - 1));
+            if (k < s.length()) {
+                if (set.contains(k)) {
+                    break;
+                } else {
+                    set.add(k);
+                    result[j++] = s.charAt(k);
+                }
+            }
+            System.out.println(String.valueOf(result));
+        }
+        return String.valueOf(result);
+    }
+
 }
