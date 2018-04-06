@@ -28,14 +28,15 @@ public class AddTwoNumbersII445 {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode tmp = new ListNode(0);
         ListNode res = tmp;
-        l1 = reverse(l1);
-        l2 = reverse(l2);
+        //l1 = reverse(l1);
+        //l2 = reverse(l2);
         int flag = 0;
         int val = 0;
         while (l1 != null || l2 != null) {
             int a = l1 == null ? 0 : l1.val;
             int b = l2 == null ? 0 : l2.val;
             val = (a + b + flag) % 10;
+            //flag为进位标志：0或1
             flag = (a + b + flag) / 10;
             tmp = tmp.next = new ListNode((val));
             if (l1 != null) {
@@ -48,7 +49,8 @@ public class AddTwoNumbersII445 {
         if (flag == 1) {
             tmp.next = new ListNode(flag);
         }
-        return reverse(res.next);
+        //return reverse(res.next);
+        return res.next;
     }
 
     /**

@@ -1,4 +1,4 @@
-package me.leetcode.cn.fail.linkedlist;
+package me.leetcode.cn.linkedlist;
 
 import me.leetcode.util.ListNode;
 
@@ -6,6 +6,7 @@ import me.leetcode.util.ListNode;
  * @author AlbertRui
  * @date 2018-04-05 22:58
  */
+@SuppressWarnings("ALL")
 public class Solutions {
 
     /**
@@ -20,34 +21,25 @@ public class Solutions {
      * 输出：7 -> 0 -> 8
      * 原因：342 + 465 = 807
      * <p>
-     * 我的这种解法处理不了大数据
      */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        long num1 = 0;
-        long num2 = 0;
-
-        int i = 0;
-        while (l1 != null) {
-            num1 += l1.val * Math.pow(10, i++);
-            l1 = l1.next;
+        ListNode temp = new ListNode(0);
+        ListNode res = temp;
+        int flag = 0;
+        int val = 0;
+        while (l1 != null || l2 != null) {
+            int val1 = l1 == null ? 0 : l1.val;
+            int val2 = l2 == null ? 0 : l2.val;
+            val = (val1 + val2 + flag) % 10;
+            flag = (val1 + val2 + flag) / 10;//只有0和1两种结果
+            temp = temp.next = new ListNode(val);
+            if (l1 != null)
+                l1 = l1.next;
+            if (l2 != null)
+                l2 = l2.next;
         }
-        i = 0;
-        while (l2 != null) {
-            num2 += l2.val * Math.pow(10, i++);
-            l2 = l2.next;
-        }
-        Long num = num1 + num2;
-        String numStr = num.toString();
-        ListNode result = new ListNode(0);
-        ListNode temp = result;
-        int j = numStr.length();
-        while (j > 0) {
-            temp.val = Integer.parseInt(String.valueOf(numStr.charAt(--j)));
-            if (j != 0) {
-                temp.next = new ListNode(0);
-                temp = temp.next;
-            }
-        }
-        return result;
+        if (flag == 1)
+            temp.next = new ListNode(1);
+        return res.next;
     }
 }

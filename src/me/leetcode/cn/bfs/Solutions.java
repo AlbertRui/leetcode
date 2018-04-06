@@ -13,6 +13,7 @@ import java.util.Set;
 public class Solutions {
 
     /**
+     * 使用广度优先搜索
      * 单词接龙127
      * 给出两个单词（beginWord 和 endWord）和一个字典，找到从 beginWord 到 endWord 的最短转换序列，转换需遵循如下规则：
      * <p>
