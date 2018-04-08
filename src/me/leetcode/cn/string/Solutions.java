@@ -1,6 +1,5 @@
 package me.leetcode.cn.string;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -167,13 +166,33 @@ public class Solutions {
      * isMatch("aa", ".*") → true
      * isMatch("ab", ".*") → true
      * isMatch("aab", "c*a*b") → true
+     *
+     * 参考：https://www.jianshu.com/p/85f3e5a9fcda
      */
     public boolean isMatch(String s, String p) {
-        if (s.equals(p))
-            return true;
-        return false;
-    }
+        if (p.isEmpty()) {
+            return s.isEmpty();
+        }
 
+        //第二个字符不是*
+        if (p.length() == 1 || p.charAt(1) != '*') {
+            if (s.isEmpty() || (p.charAt(0) != '.' && p.charAt(0) != s.charAt(0))) {
+                return false;
+            } else {
+                return isMatch(s.substring(1), p.substring(1));
+            }
+        }
+
+        //第二个字符是*或者长度大于1
+        while (!s.isEmpty() && (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.')) {
+            if (isMatch(s, p.substring(2))) {
+                return true;
+            }
+            s = s.substring(1);
+        }
+
+        return isMatch(s, p.substring(2));
+    }
     public static void main(String[] args) {
 //        lengthOfLongestSubstring("abcabb");
 //        System.out.println("================set=========================");
