@@ -166,7 +166,7 @@ public class Solutions {
      * isMatch("aa", ".*") → true
      * isMatch("ab", ".*") → true
      * isMatch("aab", "c*a*b") → true
-     *
+     * <p>
      * 参考：https://www.jianshu.com/p/85f3e5a9fcda
      */
     public boolean isMatch(String s, String p) {
@@ -193,6 +193,7 @@ public class Solutions {
 
         return isMatch(s, p.substring(2));
     }
+
     public static void main(String[] args) {
 //        lengthOfLongestSubstring("abcabb");
 //        System.out.println("================set=========================");
