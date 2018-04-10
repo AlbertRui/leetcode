@@ -1,5 +1,12 @@
 package me.leetcode.cn.array;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
 /**
  * @author AlbertRui
  * @date 2018-04-05 20:41
@@ -122,5 +129,37 @@ public class Solutions {
                 r--;
         }
         return maxarea;
+    }
+
+    /**
+     * 15. 三数之和
+     * 给定一个包含 n 个整数的数组 S，是否存在属于 S 的三个元素 a，b，c 使得 a + b + c = 0 ？
+     * 找出所有不重复的三个元素组合使三个数的和为零。
+     * 注意：结果不能包括重复的三个数的组合。
+     * 例如, 给定数组 S = [-1, 0, 1, 2, -1, -4]，
+     * 一个结果集合为：
+     * [
+     * [-1, 0, 1],
+     * [-1, -1, 2]
+     * ]
+     */
+    public List<List<Integer>> threeSum(int[] nums) {
+        Set<List<Integer>> listSet = new HashSet<>();
+        List<Integer> list;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                for (int k = j + 1; k < nums.length; k++) {
+                    if (nums[i] + nums[j] + nums[k] == 0) {
+                        list = new ArrayList<>();
+                        list.add(nums[i]);
+                        list.add(nums[j]);
+                        list.add(nums[k]);
+                        Collections.sort(list);
+                        listSet.add(list);
+                    }
+                }
+            }
+        }
+        return new ArrayList<>(listSet);
     }
 }
