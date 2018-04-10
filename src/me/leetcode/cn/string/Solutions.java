@@ -194,6 +194,24 @@ public class Solutions {
         return isMatch(s, p.substring(2));
     }
 
+    /**
+     * 14. 最长公共前缀
+     * 编写一个函数来查找字符串数组中最长的公共前缀字符串。
+     */
+    public String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) {
+            return "";
+        }
+        for (int i = 0; i < strs[0].length(); i++) {
+            for (String str : strs) {
+                if (i == str.length() || str.charAt(i) != strs[0].charAt(i)) {
+                    return str.substring(0, i);
+                }
+            }
+        }
+        return strs[0];
+    }
+
     public static void main(String[] args) {
 //        lengthOfLongestSubstring("abcabb");
 //        System.out.println("================set=========================");
