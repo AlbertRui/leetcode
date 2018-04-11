@@ -1,18 +1,17 @@
 package me.leetcode.cn.string;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 
 /**
  * @author AlbertRui
  * @date 2018-04-06 10:08
  */
-@SuppressWarnings("ALL")
 public class Solutions {
 
     /**
@@ -77,8 +76,6 @@ public class Solutions {
      * 示例:
      * 输入: "cbbd"
      * 输出: "bb"
-     *
-     * @param args
      */
     public String longestPalindrome(String s) {
         int start = 0, end = 0;
@@ -226,7 +223,8 @@ public class Solutions {
      * 使用队列实现
      */
     public List<String> letterCombinations(String digits) {
-        Queue<String> ans = new LinkedList<String>();
+        if (digits.length() == 0) return new ArrayList<>();
+        LinkedList<String> ans = new LinkedList<>();
         String[] mapping = {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
         ans.add("");
         for (int i = 0; i < digits.length(); i++) {
