@@ -1,11 +1,8 @@
 package me.leetcode.cn.array;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * @author AlbertRui
@@ -144,22 +141,63 @@ public class Solutions {
      * ]
      */
     public List<List<Integer>> threeSum(int[] nums) {
-        Set<List<Integer>> listSet = new HashSet<>();
         List<Integer> list;
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
         for (int i = 0; i < nums.length; i++) {
-            for (int j = i + 1; j < nums.length; j++) {
-                for (int k = j + 1; k < nums.length; k++) {
-                    if (nums[i] + nums[j] + nums[k] == 0) {
-                        list = new ArrayList<>();
-                        list.add(nums[i]);
-                        list.add(nums[j]);
-                        list.add(nums[k]);
-                        Collections.sort(list);
-                        listSet.add(list);
-                    }
+            if (nums[i] > 0) break;
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            int sum, begin = i + 1, end = nums.length - 1;
+            while (begin < end) {
+                sum = nums[i] + nums[begin] + nums[end];
+                if (sum == 0) {
+                    list = new ArrayList<>();
+                    list.add(nums[i]);
+                    list.add(nums[begin]);
+                    list.add(nums[end]);
+                    result.add(list);
+                    begin++;
+                    end--;
+                    while (begin < end && nums[begin] == nums[begin - 1]) begin++;
+                    while (begin < end && nums[end] == nums[end + 1]) end--;
+                } else if (sum > 0) {
+                    end--;
+                } else {
+                    begin++;
                 }
             }
         }
-        return new ArrayList<>(listSet);
+        return result;
+    }
+
+    /**
+     * 16. 最接近的三数之和
+     * 给定一个包括 n 个整数的数组 S，找出 S 中的三个整数使得他们的和与给定的数 target 最接近。
+     * 返回这三个数的和。假定每组输入只存在一个答案。
+     * 例如，给定数组 S = {-1 2 1 -4}, 并且 target = 1.
+     * 与 target 最接近的三个数的和为 2. (-1 + 2 + 1 = 2).
+     */
+    public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int pFront, pBack, sum, result = 0, distance = Integer.MAX_VALUE;
+        for (int i = 0; i < nums.length - 2; i++) {
+            pFront = i + 1;
+            pBack = nums.length - 1;
+            while (pFront < pBack) {
+                sum = nums[i] + nums[pFront] + nums[pBack];
+                if (sum == target) {
+                    return sum;
+                } else if (Math.abs(sum - target) < distance) {
+                    distance = Math.abs(sum - target);
+                    result = sum;
+                }
+                if (sum < target) {
+                    pFront++;
+                } else {
+                    pBack--;
+                }
+            }
+        }
+        return result;
     }
 }

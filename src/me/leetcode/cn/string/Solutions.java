@@ -2,6 +2,8 @@ package me.leetcode.cn.string;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -210,6 +212,29 @@ public class Solutions {
             }
         }
         return strs[0];
+    }
+
+    /**
+     * 17. 电话号码的字母组合
+     * 给定一个数字字符串，返回数字所有可能表示的字母组合。
+     * 数字到字母的映射（和电话号码一样）。
+     * 输入：数字字符串 "23"
+     * 输出：["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+     * 说明:尽管上面的答案是按字典序排列的，但是你的答案可以是任何顺序。
+     */
+    public List<String> letterCombinations(String digits) {
+        LinkedList<String> ans = new LinkedList<String>();
+        String[] mapping = {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        ans.add("");
+        for (int i = 0; i < digits.length(); i++) {
+            int x = Character.getNumericValue(digits.charAt(i));
+            while (ans.peek().length() == i) {
+                String t = ans.remove();
+                for (char s : mapping[x].toCharArray())
+                    ans.add(t + s);
+            }
+        }
+        return ans;
     }
 
     public static void main(String[] args) {
