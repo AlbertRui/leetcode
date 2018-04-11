@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -221,9 +222,11 @@ public class Solutions {
      * 输入：数字字符串 "23"
      * 输出：["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
      * 说明:尽管上面的答案是按字典序排列的，但是你的答案可以是任何顺序。
+     * <p>
+     * 使用队列实现
      */
     public List<String> letterCombinations(String digits) {
-        LinkedList<String> ans = new LinkedList<String>();
+        Queue<String> ans = new LinkedList<String>();
         String[] mapping = {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
         ans.add("");
         for (int i = 0; i < digits.length(); i++) {
