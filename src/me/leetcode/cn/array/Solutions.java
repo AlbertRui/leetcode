@@ -1,8 +1,12 @@
 package me.leetcode.cn.array;
 
+import jdk.nashorn.internal.runtime.linker.LinkerCallSite;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author AlbertRui
@@ -219,7 +223,57 @@ public class Solutions {
      * ]
      */
     public List<List<Integer>> fourSum(int[] nums, int target) {
-        return null;
+        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+        int begin, end, sum;
+        for (int i = 0; i < nums.length - 3; i++) {
+            if (nums[i] > target / 4) break;
+            if (i != 0 && nums[i] == nums[i - 1]) continue;
+            for (int j = i + 1; j < nums.length - 2; j++) {
+                if (nums[j] > (target - nums[i]) / 3) break;
+                if (j != i + 1 && nums[j] == nums[j - 1]) continue;
+                begin = j + 1;
+                end = nums.length - 1;
+                while (begin < end) {
+                    sum = nums[i] + nums[j] + nums[begin] + nums[end];
+                    if (sum == target) {
+                        result.add(Arrays.asList(nums[i], nums[j], nums[begin], nums[end]));
+                        begin++;
+                        end--;
+                        while (begin < end && nums[begin] == nums[begin - 1]) begin++;
+                        while (begin < end && nums[end] == nums[end + 1]) end--;
+                    } else if (sum > target) {
+                        end--;
+                    } else {
+                        begin++;
+                    }
+                }
+            }
+        }
+        return result;
     }
 
+    /**
+     * 90. 子集 II
+     * 给定一个可能包含重复整数的列表，返回所有可能的子集（幂集）。
+     * 注意事项：解决方案集不能包含重复的子集。
+     * 例如，如果 nums = [1,2,2]，答案为：
+     * [[2],[1],[1,2,2],[2,2],[1,2],[]]
+     */
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+        backTrack(result, new ArrayList<>(), nums, 0);
+        return result;
+    }
+
+    private void backTrack(List<List<Integer>> list, List<Integer> subset, int[] nums, int start) {
+        list.add(new ArrayList<>(subset));
+        for (int curr = start; curr < nums.length; curr++) {
+            if (curr != start && nums[curr] == nums[curr - 1]) continue;
+            subset.add(nums[curr]);
+            backTrack(list, subset, nums, curr + 1);
+            subset.remove(subset.size() - 1);
+        }
+    }
 }
