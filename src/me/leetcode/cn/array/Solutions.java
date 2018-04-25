@@ -276,4 +276,116 @@ public class Solutions {
             subset.remove(subset.size() - 1);
         }
     }
+
+    /**
+     * 26. 删除排序数组中的重复项
+     * 给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。
+     * 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
+     * 示例 1:
+     * 给定数组 nums = [1,1,2],
+     * 函数应该返回新的长度 2, 并且原数组 nums 的前两个元素被修改为 1, 2。
+     * 你不需要考虑数组中超出新长度后面的元素。
+     * 示例 2:
+     * 给定 nums = [0,0,1,1,1,2,2,3,3,4],
+     * 函数应该返回新的长度 5, 并且原数组 nums 的前五个元素被修改为 0, 1, 2, 3, 4。
+     * 你不需要考虑数组中超出新长度后面的元素。
+     * 说明:
+     * 为什么返回数值是整数，但输出的答案是数组呢?
+     * 请注意，输入数组是以“引用”方式传递的，这意味着在函数里修改输入数组对于调用者是可见的。
+     * <p>
+     * 你可以想象内部操作如下:
+     * // nums 是以“引用”方式传递的。也就是说，不对实参作任何拷贝
+     * int len = removeDuplicates(nums);
+     * // 在函数里修改输入数组对于调用者是可见的。
+     * // 根据你的函数返回的长度, 它会打印出数组中该长度范围内的所有元素。
+     * for (int i = 0; i < len; i++) {
+     * print(nums[i]);
+     * }
+     */
+    public int removeDuplicates(int[] nums) {
+        if (nums.length == 0) return 0;
+        int i = 0;
+        for (int j = 1; j < nums.length; j++)
+            if (nums[j] != nums[i])
+                nums[++i] = nums[j];
+        return i + 1;
+    }
+
+    /**
+     * 647. 回文子串
+     * 给定一个字符串，你的任务是计算这个字符串中有多少个回文子串。
+     * 具有不同开始位置或结束位置的子串，即使是由相同的字符组成，也会被计为是不同的子串。
+     * 示例 1:
+     * 输入: "abc"
+     * 输出: 3
+     * 解释: 三个回文子串: "a", "b", "c".
+     * 示例 2:
+     * 输入: "aaa"
+     * 输出: 6
+     * 说明: 6个回文子串: "a", "a", "a", "aa", "aa", "aaa".
+     * 注意:
+     * 输入的字符串长度不会超过1000。
+     */
+    public int countSubstrings(String s) {
+        int N = s.length(), ans = 0;
+        for (int center = 0; center <= 2 * N - 1; center++) {
+            int left = center / 2;
+            int right = left + center % 2;
+            while (left >= 0 && right < N && s.charAt(left) == s.charAt(right)) {
+                ans++;
+                left--;
+                right++;
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * 217. 存在重复
+     * 给定一个整数数组，判断是否存在重复元素。
+     * 如果任何值在数组中出现至少两次，函数应该返回 true。如果每个元素都不相同，则返回 false。
+     */
+    public boolean containsDuplicate(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            if (set.contains(num)) return true;
+            set.add(num);
+        }
+        return false;
+    }
+
+    /**
+     * 495. 提莫攻击
+     * 在《英雄联盟》的世界中，有一个叫“提莫”的英雄，他的攻击可以让敌方英雄艾希（编者注：寒冰射手）进入中毒状态。
+     * 现在，给出提莫对艾希的攻击时间序列和提莫攻击的中毒持续时间，你需要输出艾希的中毒状态总时长。
+     * 你可以认为提莫在给定的时间点进行攻击，并立即使艾希处于中毒状态。
+     * 示例1:
+     * 输入: [1,4], 2
+     * 输出: 4
+     * 原因: 在第1秒开始时，提莫开始对艾希进行攻击并使其立即中毒。中毒状态会维持2秒钟，直到第2秒钟结束。
+     * 在第4秒开始时，提莫再次攻击艾希，使得艾希获得另外2秒的中毒时间。
+     * 所以最终输出4秒。
+     * 示例2:
+     * 输入: [1,2], 2
+     * 输出: 3
+     * 原因: 在第1秒开始时，提莫开始对艾希进行攻击并使其立即中毒。中毒状态会维持2秒钟，直到第2秒钟结束。
+     * 但是在第2秒开始时，提莫再次攻击了已经处于中毒状态的艾希。
+     * 由于中毒状态不可叠加，提莫在第2秒开始时的这次攻击会在第3秒钟结束。
+     * 所以最终输出3。
+     * 注意：
+     * 你可以假定时间序列数组的总长度不超过10000。
+     * 你可以假定提莫攻击时间序列中的数字和提莫攻击的中毒持续时间都是非负整数，并且不超过10,000,000。
+     */
+    public int findPoisonedDuration(int[] timeSeries, int duration) {
+        if (timeSeries.length == 0) return 0;
+        int timeDif, res = duration;
+        for (int i = 1; i < timeSeries.length; i++) {
+            timeDif = timeSeries[i] - timeSeries[i - 1];
+            if (timeDif < duration)
+                res -= (duration - timeDif);
+            res += duration;
+        }
+        return res;
+    }
+
 }

@@ -1,6 +1,5 @@
 package me.leetcode.cn.linkedlist;
 
-import me.leetcode.array.TeemoAttacking495;
 import me.leetcode.util.ListNode;
 
 import java.util.Comparator;
