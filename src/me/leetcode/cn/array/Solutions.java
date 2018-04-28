@@ -1,7 +1,5 @@
 package me.leetcode.cn.array;
 
-import jdk.nashorn.internal.runtime.linker.LinkerCallSite;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -386,6 +384,66 @@ public class Solutions {
             res += duration;
         }
         return res;
+    }
+
+    /**
+     * 41. 缺失的第一个正数
+     * 给定一个未排序的整数数组，找出其中没有出现的最小的正整数。
+     * 示例 1:
+     * 输入: [1,2,0]
+     * 输出: 3
+     * 示例 2:
+     * 输入: [3,4,-1,1]
+     * 输出: 2
+     * 示例 3:
+     * 输入: [7,8,9,11,12]
+     * 输出: 1
+     * 说明:你的算法的时间复杂度应为O(n)，并且只能使用常数级别的空间。
+     */
+    public int firstMissingPositive(int[] nums) {
+        int i = 0, n = nums.length;
+        while (i < n) {
+            if (nums[i] != (i + 1) && nums[i] >= 1 && nums[i] <= n && nums[nums[i] - 1] != nums[i])
+                swap(nums, i, nums[i] - 1);
+            else
+                i++;
+        }
+        for (i = 0; i < n; ++i)
+            if (nums[i] != (i + 1))
+                return i + 1;
+        return n + 1;
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
+    /**
+     * 88. 合并两个有序数组
+     * 给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。
+     * 说明:初始化 nums1 和 nums2 的元素数量分别为 m 和 n。
+     * 你可以假设 nums1 有足够的空间（空间大小大于或等于 m + n）来保存 nums2 中的元素。
+     * 示例:
+     * 输入:
+     * nums1 = [1,2,3,0,0,0], m = 3
+     * nums2 = [2,5,6],       n = 3
+     * 输出: [1,2,2,3,5,6]
+     */
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int i = m - 1;
+        int j = n - 1;
+        int index = m + n - 1;
+        while (i >= 0 && j >= 0) {
+            if (nums1[i] > nums2[j])
+                nums1[index--] = nums1[i--];
+            else
+                nums1[index--] = nums2[j--];
+
+        }
+        while (i >= 0) nums1[index--] = nums1[i--];
+        while (j >= 0) nums1[index--] = nums2[j--];
     }
 
 }
