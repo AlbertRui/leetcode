@@ -12,7 +12,19 @@ public class Solutions {
      * 示例：若 a = 1 ，b = 2，返回 3。
      */
     public int getSum(int a, int b) {
+        if (b == 0) return a;
+        int sum = a ^ b;
+        int carry = (a & b) << 1;
+        return getSum(sum, carry);
+    }
 
+    public int getSum2(int a, int b) {
+        while (b != 0) {
+            int carry = a & b;
+            a = a ^ b;
+            b = carry << 1;
+        }
+        return a;
     }
 
 }

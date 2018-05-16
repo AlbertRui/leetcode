@@ -3,8 +3,10 @@ package me.leetcode.cn.hashtable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author AlbertRui
@@ -68,6 +70,75 @@ public class Solutions {
             ans.get(key).add(s);
         }
         return new ArrayList<>(ans.values());
+    }
+
+    /**
+     * 187. 重复的DNA序列
+     * 所有 DNA 由一系列缩写为 A，C，G 和 T 的核苷酸组成，例如：“ACGAATTCCG”。
+     * 在研究 DNA 时，识别 DNA 中的重复序列有时会对研究非常有帮助。
+     * 编写一个函数来查找 DNA 分子中所有出现超多一次的10个字母长的序列（子串）。
+     * 示例:
+     * 输入: s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"
+     * 输出: ["AAAAACCCCC", "CCCCCAAAAA"]
+     */
+    public List<String> findRepeatedDnaSequences(String s) {
+        List<String> result = new ArrayList<>();
+        Map<Integer, Integer> sumMap = new HashMap<>();
+        int sum = 0;
+        for (int i = 0; i < s.length(); i++) {
+            sum = ((sum << 3) | (s.charAt(i) & 7)) & 0x3FFFFFFF;
+            if (i < 9) continue;
+            Integer cnt = sumMap.get(sum);
+            if (cnt != null && cnt == 1) {
+                result.add(s.substring(i - 9, i + 1));
+            }
+            sumMap.put(sum, cnt != null ? cnt + 1 : 1);
+        }
+        return result;
+    }
+
+    public List<String> findRepeatedDnaSequences2(String s) {
+        List<String> res = new ArrayList<String>();
+        if (s == null || s.length() < 11) return res;
+        int hash = 0;
+
+        Map<Character, Integer> map = new HashMap<>();
+        map.put('A', 0);
+        map.put('C', 1);
+        map.put('G', 2);
+        map.put('T', 3);
+
+        Set<Integer> set = new HashSet<>();
+        Set<Integer> unique = new HashSet<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (i < 9) {
+                hash = (hash << 2) + map.get(c);
+            } else {
+                hash = (hash << 2) + map.get(c);
+                hash &= (1 << 20) - 1;
+                if (set.contains(hash) && !unique.contains(hash)) {
+                    res.add(s.substring(i - 9, i + 1));
+                    unique.add(hash);
+                } else {
+                    set.add(hash);
+                }
+            }
+        }
+        return res;
+    }
+
+    public List<String> findRepeatedDnaSequences3(String s) {
+        List<String> res = new ArrayList<>();
+        Map<String, Integer> hash = new HashMap<>();
+        for (int i = 0; i < s.length() - 9; i++) {
+            String str = s.substring(i, i + 10);
+            Integer count = hash.get(str);
+            if (count != null && count == 1) res.add(str);
+            hash.put(str, count == null ? 1 : count + 1);
+        }
+        return res;
     }
 
 }
