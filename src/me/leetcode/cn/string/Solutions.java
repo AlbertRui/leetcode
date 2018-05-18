@@ -1,6 +1,7 @@
 package me.leetcode.cn.string;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -332,6 +333,66 @@ public class Solutions {
             }
         }
         return write;
+    }
+
+    /**
+     * 345. 反转字符串中的元音字母
+     * 题目描述提示帮助提交记录社区讨论阅读解答
+     * 编写一个函数，以字符串作为输入，反转该字符串中的元音字母。
+     * 示例 1：
+     * 给定 s = "hello", 返回 "holle".
+     * 示例 2：
+     * 给定 s = "leetcode", 返回 "leotcede".
+     * 注意:
+     * 元音字母不包括 "y".
+     * 超时
+     */
+    public String reverseVowels(String s) {
+        if (s == null || s.equals("")) return s;
+        char[] chars = s.toCharArray();
+        Set<Character> characters = new HashSet<>();
+        characters.add('a');
+        characters.add('o');
+        characters.add('e');
+        characters.add('i');
+        characters.add('u');
+        int head = 0, tail = chars.length - 1;
+        while (head != tail) {
+            if (characters.contains(chars[head]) && characters.contains(chars[tail])) {
+                char temp = chars[head];
+                chars[tail] = chars[tail];
+                chars[tail] = temp;
+            } else if (characters.contains(chars[head])) {
+                tail--;
+            } else if (characters.contains(chars[tail])) {
+                head++;
+            } else {
+                head++;
+                tail--;
+            }
+        }
+        return Arrays.toString(chars);
+    }
+
+    /**
+     * 正确解法
+     */
+    public String reverseVowels2(String s) {
+        char[] chars = s.toCharArray();
+        int left = 0;
+        int right = chars.length - 1;
+        while (left < right) {
+            if ("AEIOUaeiou".indexOf(chars[left]) < 0) left++;
+            else if ("AEIOUaeiou".indexOf(chars[right]) < 0) right--;
+            else {
+                char tmp = chars[left];
+                chars[left] = chars[right];
+                chars[right] = tmp;
+                left++;
+                right--;
+            }
+        }
+        return new String(chars);
     }
 
     public static void main(String[] args) {
