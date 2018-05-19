@@ -3,7 +3,12 @@ package me.leetcode.cn.tree;
 import me.leetcode.util.TreeNode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Stack;
 
 /**
  * @author AlbertRui
@@ -132,6 +137,99 @@ public class Solutions {
             dfs(root.left, value * 10 + root.left.val);
         if (root.right != null)
             dfs(root.right, value * 10 + root.right.val);
+    }
+
+    /**
+     * 199. 二叉树的右视图
+     * 给定一棵二叉树，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
+     * 示例:
+     * <p>
+     * 输入: [1,2,3,null,5,null,4]
+     * 输出: [1, 3, 4]
+     * 解释:
+     * 1            <---
+     * / \
+     * 2   3         <---
+     * \   \
+     * 5   4       <---
+     */
+    //dfs
+    public List<Integer> rightSideView(TreeNode root) {
+        Map<Integer, Integer> rightmostValueAtDepth = new HashMap<>();
+        int maxDepth = -1;
+
+        /* These two stacks are always synchronized, providing an implicit
+         * association values with the same offset on each stack. */
+        Stack<TreeNode> nodeStack = new Stack<>();
+        Stack<Integer> depthStack = new Stack<>();
+        nodeStack.push(root);
+        depthStack.push(0);
+
+        while (!nodeStack.isEmpty()) {
+            TreeNode node = nodeStack.pop();
+            int depth = depthStack.pop();
+
+            if (node != null) {
+                maxDepth = Math.max(maxDepth, depth);
+
+                /* The first node that we encounter at a particular depth contains
+                 * the correct value. */
+                if (!rightmostValueAtDepth.containsKey(depth))
+                    rightmostValueAtDepth.put(depth, node.val);
+
+                nodeStack.push(node.left);
+                nodeStack.push(node.right);
+                depthStack.push(depth + 1);
+                depthStack.push(depth + 1);
+            }
+        }
+
+        /* Construct the solution based on the values that we end up with at the
+         * end. */
+        List<Integer> rightView = new ArrayList<>();
+        for (int depth = 0; depth <= maxDepth; depth++)
+            rightView.add(rightmostValueAtDepth.get(depth));
+
+        return rightView;
+    }
+
+    //bfs
+    public List<Integer> rightSideView2(TreeNode root) {
+        Map<Integer, Integer> rightmostValueAtDepth = new HashMap<>();
+        int maxDepth = -1;
+
+        /* These two Queues are always synchronized, providing an implicit
+         * association values with the same offset on each Queue. */
+        Queue<TreeNode> nodeQueue = new LinkedList<>();
+        Queue<Integer> depthQueue = new LinkedList<>();
+        nodeQueue.add(root);
+        depthQueue.add(0);
+
+        while (!nodeQueue.isEmpty()) {
+            TreeNode node = nodeQueue.remove();
+            int depth = depthQueue.remove();
+
+            if (node != null) {
+                maxDepth = Math.max(maxDepth, depth);
+
+                /* The last node that we encounter at a particular depth contains
+                 * the correct value, so the correct value is never overwritten. */
+                rightmostValueAtDepth.put(depth, node.val);
+
+                nodeQueue.add(node.left);
+                nodeQueue.add(node.right);
+                depthQueue.add(depth+1);
+                depthQueue.add(depth+1);
+            }
+        }
+
+        /* Construct the solution based on the values that we end up with at the
+         * end. */
+        List<Integer> rightView = new ArrayList<>();
+        for (int depth = 0; depth <= maxDepth; depth++)
+            rightView.add(rightmostValueAtDepth.get(depth));
+
+        return rightView;
     }
 
 }
