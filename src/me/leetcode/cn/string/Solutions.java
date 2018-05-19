@@ -408,8 +408,25 @@ public class Solutions {
         StringBuilder S = new StringBuilder(A);
         for (; S.length() < B.length(); q++) S.append(A);
         if (S.indexOf(B) >= 0) return q;
-        if (S.append(A).indexOf(B) >= 0) return q+1;
+        if (S.append(A).indexOf(B) >= 0) return q + 1;
         return -1;
+    }
+
+    /**
+     * 344. 反转字符串
+     * 请编写一个函数，其功能是将输入的字符串反转过来。
+     * 示例：
+     * 输入：s = "hello"
+     * 返回："olleh"
+     */
+    public String reverseString(String s) {
+        return new StringBuilder(s).reverse().toString();
+    }
+
+    public String reverseString2(String s) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = s.length() - 1; i >= 0; i--) sb.append(s.charAt(i));
+        return sb.toString();
     }
 
     public static void main(String[] args) {
