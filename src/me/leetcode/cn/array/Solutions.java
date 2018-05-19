@@ -493,4 +493,66 @@ public class Solutions {
         return res;
     }
 
+    /**
+     * 209. 长度最小的子数组
+     * 给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的子数组。
+     * 如果不存在符合条件的子数组，返回 0。
+     * 示例:
+     * 输入: [2,3,1,2,4,3], s = 7
+     * 输出: 2
+     * 解释: 子数组 [4,3] 是该条件下的长度最小的子数组。
+     * 进阶:
+     * 如果你已经完成了O(n) 时间复杂度的解法, 请尝试 O(n log n) 时间复杂度的解法。
+     * 二分法，时间复杂度为O(nlogn)
+     */
+    public int minSubArrayLen(int s, int[] nums) {
+        int[] sum = new int[nums.length];
+        int minLen = Integer.MAX_VALUE;
+        if (nums.length != 0) sum[0] = nums[0];
+        for (int i = 1; i < nums.length; i++) sum[i] = sum[i - 1] + nums[i];
+        for (int i = 0; i < nums.length; i++)
+            if (sum[i] >= s)
+                minLen = Math.min(minLen, i - binarySearchLastIndexNotBiggerThanTarget(0, i, sum[i] - s, sum));
+        return minLen == Integer.MAX_VALUE ? 0 : minLen;
+    }
+
+    private int binarySearchLastIndexNotBiggerThanTarget(int left, int right, int target, int[] sum) {
+        while (left <= right) {
+            int mid = (left + right) >> 1;
+            if (sum[mid] > target) right = mid - 1;
+            else left = mid + 1;
+        }
+        return right;
+    }
+
+    /**
+     * 双指针，时间复杂度为O(nlogn)
+     */
+    public int minSubArrayLen2(int s, int[] nums) {
+        int start = 0, sum = 0, minLen = Integer.MAX_VALUE;
+        for (int end = 0; end < nums.length; end++) {
+            sum += nums[end];
+            while (sum >= s) {
+                minLen = Math.min(minLen, end - start + 1);
+                sum -= nums[start++];
+            }
+        }
+        return minLen == Integer.MAX_VALUE ? 0 : minLen;
+    }
+
+    public int minSubArrayLen3(int s, int[] nums) {
+        if (nums.length == 0) return 0;
+        int left = 0, right = 0, sum = nums[left], min = Integer.MAX_VALUE;
+        while (right < nums.length) {
+            if (sum >= s) {
+                min = Math.min(min, right - left + 1);
+                sum = sum - nums[left++];
+            } else {
+                if (right == nums.length - 1) break;
+                else sum += nums[++right];
+            }
+        }
+        return min == Integer.MAX_VALUE ? 0 : min;
+    }
+
 }
