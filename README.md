@@ -1,3 +1,5 @@
-Here is my leetcode solutions
+Here is my leetcode back up
 =============================
-### see [leetcode](https://leetcode.com)
+
+## Something about my solutions for leetcode china see my github repository : [leetcode-cn](https://github.com/AlbertRui/leetcode-cn) 
+## Anything else see [leetcode](https://leetcode.com)
