@@ -2,9 +2,7 @@ package me.leetcode.cn.bt;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author AlbertRui
@@ -84,6 +82,110 @@ public class Solutions {
             temp.remove(temp.size() - 1);
             used[i] = false;
         }
+    }
+
+    /**
+     * 51. N皇后
+     * n 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
+     * 给定一个整数 n，返回所有不同的 n 皇后问题的解决方案。
+     * 每一种解法包含一个明确的 n 皇后问题的棋子放置方案，该方案中 'Q' 和 '.' 分别代表了皇后和空位。
+     * 示例:
+     * 输入: 4
+     * 输出: [
+     * [".Q..",  // 解法 1
+     * "...Q",
+     * "Q...",
+     * "..Q."],
+     * <p>
+     * ["..Q.",  // 解法 2
+     * "Q...",
+     * "...Q",
+     * ".Q.."]
+     * ]
+     * 解释: 4 皇后问题存在两个不同的解法。
+     */
+    private List<List<String>> result = new ArrayList<>();
+    private StringBuilder point = new StringBuilder();
+    private boolean col[];
+    private boolean skewL[];
+    private boolean skewR[];
+
+    private void dfs(int n, List<Integer> list) {
+        if (list.size() == n) {
+            //list 的索引代表行，索引值代表皇后在行中的位置
+            List<String> line = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                point.replace(list.get(i), list.get(i) + 1, "Q");
+                line.add(point.toString());
+                point.replace(list.get(i), list.get(i) + 1, ".");
+            }
+            result.add(line);
+            return;
+        }
+        for (int i = 0; i < n; i++) {
+            if (col[i] || skewL[n + (list.size() - i)] || skewR[i + list.size()]) continue;
+            col[i] = true;
+            skewL[n + (list.size() - i)] = true;
+            skewR[i + list.size()] = true;
+            list.add(i);
+            dfs(n, list);
+            list.remove(list.size() - 1);
+            col[i] = false;
+            skewL[n + (list.size() - i)] = false;
+            skewR[i + list.size()] = false;
+        }
+    }
+
+    public List<List<String>> solveNQueens(int n) {
+        for (int i = 0; i < n; i++) point.append('.');
+        col = new boolean[n];
+        skewL = new boolean[n << 1];
+        skewR = new boolean[n << 1];
+
+        dfs(n, new ArrayList<>());
+
+        return result;
+    }
+
+    /**
+     * position 可以理解为代表行
+     */
+    public List<List<String>> solveNQueens2(int n) {
+        List<List<String>> result = new ArrayList<>();
+        helper(result, new int[n], 0);
+        return result;
+    }
+
+    private void helper(List<List<String>> result, int[] queens, int position) {
+        if (position == queens.length) {
+            addSolutions(result, queens);
+            return;
+        }
+        for (int i = 0; i < queens.length; i++) {
+            queens[position] = i;
+            if (isValid(queens, position)) helper(result, queens, position + 1);
+        }
+    }
+
+    private void addSolutions(List<List<String>> result, int[] queens) {
+        StringBuilder sb;
+        List<String> strList = new ArrayList<>();
+        for (int queen : queens) {
+            sb = new StringBuilder();
+            for (int i = 0; i < queens.length; i++) {
+                if (i == queen) sb.append("Q");
+                else sb.append(".");
+            }
+            strList.add(sb.toString());
+        }
+        result.add(strList);
+    }
+
+    private boolean isValid(int[] queens, int position) {
+        for (int i = 0; i < position; i++)
+            if (queens[i] == queens[position] || Math.abs(queens[position] - queens[i]) == position - i)
+                return false;
+        return true;
     }
 
 }
