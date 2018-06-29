@@ -429,6 +429,30 @@ public class Solutions {
         return sb.toString();
     }
 
+    /**
+     * 680. 验证回文字符串 Ⅱ
+     * 给定一个非空字符串 s，最多删除一个字符。判断是否能成为回文字符串。
+     * 输入: "aba" 输出: True
+     * 示例 2:输入: "abca" 输出: True
+     * 解释: 你可以删除c字符。
+     * 注意: 字符串只包含从 a-z 的小写字母。字符串的最大长度是50000。
+     */
+    public boolean validPalindrome(String s) {
+        for (int i = 0; i < s.length() / 2; i++) {
+            if (s.charAt(i) != s.charAt(s.length() - i - 1)) {
+                int j = s.length() - i - 1;
+                return isPalindrome(s, i + 1, j) || isPalindrome(s, i, j - 1);
+            }
+        }
+        return true;
+    }
+
+    private boolean isPalindrome(String s, int i, int j) {
+        for (int k = i; k <= (i + (j - i) / 2); k++)
+            if (s.charAt(k) != s.charAt(j - k + i)) return false;
+        return true;
+    }
+
     public static void main(String[] args) {
 //        lengthOfLongestSubstring("abcabb");
 //        System.out.println("================set=========================");
