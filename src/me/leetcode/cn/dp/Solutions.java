@@ -1,5 +1,6 @@
 package me.leetcode.cn.dp;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -131,6 +132,69 @@ public class Solutions {
             }
         }
         return false;
+    }
+
+    /**
+     * 309. 最佳买卖股票时机含冷冻期
+     * 给定一个整数数组，其中第 i 个元素代表了第 i 天的股票价格 。​
+     * 设计一个算法计算出最大利润。在满足以下约束条件下，你可以尽可能地完成更多的交易（多次买卖一支股票）:
+     * 你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+     * 卖出股票后，你无法在第二天买入股票 (即冷冻期为 1 天)。
+     * 示例:
+     * 输入: [1,2,3,0,2]
+     * 输出: 3
+     * 解释: 对应的交易状态为: [买入, 卖出, 冷冻期, 买入, 卖出]
+     */
+    public int maxProfit(int[] prices) {
+        if (prices == null || prices.length == 0) return 0;
+        int[] sdp = new int[prices.length];//未持有股票最大收益
+        int[] bdp = new int[prices.length];//持有股票最大收益
+        bdp[0] = -prices[0];
+        for (int i = 1; i < prices.length; i++) {
+            sdp[i] = Math.max(sdp[i - 1], bdp[i - 1] + prices[i]);
+            if (i >= 2) bdp[i] = Math.max(bdp[i - 1], sdp[i - 2] - prices[i]);
+            else bdp[i] = Math.max(bdp[i - 1], -prices[i]);
+        }
+        return sdp[prices.length - 1];
+    }
+
+    /**
+     * 188. 买卖股票的最佳时机 IV
+     * 给定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。
+     * 设计一个算法来计算你所能获取的最大利润。你最多可以完成 k 笔交易。
+     * 注意: 你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+     * 示例 1:
+     * 输入: [2,4,1], k = 2
+     * 输出: 2
+     * 解释: 在第 1 天 (股票价格 = 2) 的时候买入，在第 2 天 (股票价格 = 4) 的时候卖出，这笔交易所能获得利润 = 4-2 = 2 。
+     * 示例 2:
+     * 输入: [3,2,6,5,0,3], k = 2
+     * 输出: 7
+     * 解释: 在第 2 天 (股票价格 = 2) 的时候买入，在第 3 天 (股票价格 = 6) 的时候卖出, 这笔交易所能获得利润 = 6-2 = 4 。
+     * 随后，在第 5 天 (股票价格 = 0) 的时候买入，在第 6 天 (股票价格 = 3) 的时候卖出, 这笔交易所能获得利润 = 3-0 = 3 。
+     * https://blog.csdn.net/jmspan/article/details/51295053
+     */
+    public int maxProfit(int k, int[] prices) {
+        if (k <= 0 || prices.length < 2) return 0;
+        int n = prices.length;
+        if (k >= n / 2) {
+            int max = 0;
+            for (int i = 1; i < n; i++)
+                max += Math.max(0, prices[i] - prices[i - 1]);
+            return max;
+        }
+
+        int[][] buy = new int[prices.length + 1][k + 1];
+        int[][] sell = new int[prices.length + 1][k + 1];
+        Arrays.fill(buy[0], Integer.MIN_VALUE);
+
+        for (int i = 1; i <= prices.length; i++) {
+            for (int j = 1; j <= k; j++) {
+                buy[i][j] = Math.max(buy[i - 1][j], sell[i][j - 1] - prices[i - 1]);//买不买
+                sell[i][j] = Math.max(sell[i - 1][j], buy[i][j] + prices[i - 1]);//卖不卖
+            }
+        }
+        return sell[prices.length][k];
     }
 
 }
